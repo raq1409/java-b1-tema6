@@ -111,17 +111,22 @@ public class UniqueRegistration {
     }
 
     public void registerParticipants(String[] entries) {
-        // TODO: Register emails without duplicates, maintaining original order.
+        for(String entry : entries) registered.add(entry);
     }
 
     public List<String> generateAlphabeticalList() {
-        // TODO: Return a list of registered emails in alphabetical order.
-        return null;
+        TreeSet<String> orderedSet = new TreeSet<String>(registered);
+        return new ArrayList<String>(orderedSet);
     }
 
     public List<String> checkRegistrations(String[] toCheck) {
-        // TODO: Return a list of emails from toCheck that are already registered.
-        return null;
+        List<String> registeredEmails = new ArrayList<String>();
+        for(String email : toCheck) {
+            if(registered.contains(email)) {
+                registeredEmails.add(email);
+            }
+        }
+        return registeredEmails;
     }
 
     public Set<String> getRegistered() {
@@ -131,7 +136,7 @@ public class UniqueRegistration {
     // -------------------------------------------------------------
     // Manual test using IDE
     // -------------------------------------------------------------
-    /*
+    
     public static void main(String[] args) {
         UniqueRegistration reg = new UniqueRegistration();
 
@@ -153,7 +158,7 @@ public class UniqueRegistration {
         System.out.println("\n== Already Registered ==");
         System.out.println(found);
     }
-    */
+    
     // Torna a comentar aquest main quan vulguis executar els tests amb maven test
     // Vuelve a comentar este main cuando quieras ejecutar los tests con:
     // mvn test
