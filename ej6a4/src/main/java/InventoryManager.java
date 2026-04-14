@@ -136,35 +136,49 @@ import java.util.*;
 public class InventoryManager {
 
     public static Map<String, Integer> createInventory() {
-        // TODO: Create and return a new HashMap
-        return null;
+        return new HashMap<String, Integer>();
     }
 
     public static void addProduct(Map<String, Integer> inventory, String product, int quantity) {
-        // TODO: Add the product with quantity or increment existing quantity
+        if(inventory.containsKey(product)) {
+            Integer currentValue = inventory.get(product);
+            inventory.replace(product, currentValue + quantity);
+        } else {
+            inventory.put(product, quantity);
+        }
     }
 
     public static void updateStock(Map<String, Integer> inventory, String product, int newQuantity) {
-        // TODO: If the product exists, update its quantity to newQuantity
+        if(inventory.containsKey(product)) inventory.replace(product, newQuantity);
     }
 
     public static void removeZeroStock(Map<String, Integer> inventory) {
-        // TODO: Remove all entries where quantity is 0 using a for-each structure
+        List<String> keysToRemove = new ArrayList<String>();
+        for(Map.Entry<String,Integer> entry : inventory.entrySet()) {
+            if(entry.getValue() == 0) keysToRemove.add(entry.getKey());
+        }
+
+        for(String key : keysToRemove) {
+            inventory.remove(key);
+        }
     }
 
     public static int getStock(Map<String, Integer> inventory, String product) {
-        // TODO: Return the stock for the product, or 0 if not present
+        if(inventory.containsKey(product)) return inventory.get(product);
+        
         return 0;
     }
 
     public static void printInventory(Map<String, Integer> inventory) {
-        // TODO: Print all product names and their quantities
+        for(Map.Entry<String,Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }    
     }
 
     // -------------------------------------------------------------
     // Manual test using IDE
     // -------------------------------------------------------------
-    /*
+    
     public static void main(String[] args) {
         Map<String, Integer> inventory = createInventory();
         addProduct(inventory, "Mouse", 10);
@@ -176,7 +190,7 @@ public class InventoryManager {
         System.out.println("Keyboard stock: " + getStock(inventory, "Keyboard"));
         printInventory(inventory);
     }
-    */
+    
 	// Torna a comentar aquest main quan vulguis executar els tests amb maven test
     // Vuelve a comentar este main cuando quieras ejecutar los tests con:
     // mvn test
