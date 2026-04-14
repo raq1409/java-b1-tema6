@@ -121,27 +121,39 @@ public class GradeBookManager {
     }
 
     public void addScore(String student, int score) {
-        // TODO: Add score to the given student. Create new list if student does not exist.
+        gradeBook.putIfAbsent(student, new ArrayList<Integer>());
+        gradeBook.get(student).add(score);
     }
 
     public double getAverage(String student) {
-        // TODO: Return average of the student's scores.
-        // Return -1 if student does not exist, 0 if they have no scores.
-        return 0;
+        if(gradeBook.containsKey(student)) {
+            if(gradeBook.get(student).isEmpty()) return 0;
+            
+            double sum = 0;
+            for(double grade : gradeBook.get(student)) {
+                sum += grade;
+            }
+            
+            return (double) sum / gradeBook.get(student).size();
+        } 
+
+        return -1;
     }
 
     public void removeStudent(String student) {
-        // TODO: Remove the student from the grade book.
+        gradeBook.remove(student);
     }
 
     public void printGradeBook() {
-        // TODO: Print all students and their scores in alphabetical order.
+        for(Map.Entry<String, List<Integer>> entry : gradeBook.entrySet())  {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
     }
 
     // -------------------------------------------------------------
     // Manual test using IDE
     // -------------------------------------------------------------
-    /*
+    
     public static void main(String[] args) {
         GradeBookManager gb = new GradeBookManager();
         gb.addScore("Alice", 90);
@@ -154,7 +166,7 @@ public class GradeBookManager {
         gb.removeStudent("Bob");
         gb.printGradeBook();
     }
-    */
+    
     // Torna a comentar aquest main quan vulguis executar els tests amb maven test
     // Vuelve a comentar este main cuando quieras ejecutar los tests con:
     // mvn test
