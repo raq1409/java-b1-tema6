@@ -127,25 +127,25 @@ public class TicketQueueManager {
     }
 
     public void addTicket(String ticket) {
-        // TODO: Add the ticket to the queue.
+        ticketQueue.add(ticket);
     }
 
     public String getNextTicket() {
-        // TODO: Return the first ticket in the queue without removing it.
-        return null;
+        return ticketQueue.peek();
     }
 
     public void processTicket() {
-        // TODO: Remove and process the first ticket in the queue.
+        ticketQueue.poll();
     }
 
     public void printAllTickets() {
-        // TODO: Print all tickets currently in the queue, one per line.
+        for(String ticket : ticketQueue) {
+            System.out.println(ticket);
+        }
     }
 
     public boolean isTicketPresent(String ticket) {
-        // TODO: Return true if the ticket is in the queue; false otherwise.
-        return false;
+        return ticketQueue.contains(ticket);
     }
 
     // -------------------------------------------------------------
