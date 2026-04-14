@@ -145,38 +145,48 @@ import java.util.*;
 public class TaskManager {
 
     public static List<String> createTaskList() {
-        // TODO: Return a new LinkedList
-        return null;
+        return new LinkedList<>();
     }
 
     public static void addTask(List<String> list, String task) {
-        // TODO: Add task at the end
+        list.add(task);
     }
 
     public static void addUrgentTask(List<String> list, String task) {
-        // TODO: Add task at the beginning (if LinkedList, use addFirst)
+        if(list instanceof LinkedList) {
+            ((LinkedList<String>)list).addFirst(task);
+        } else {
+            list.add(0, task);
+        }
     }
 
     public static void mergeTaskLists(List<String> base, List<String> toMerge) {
-        // TODO: Add all tasks from toMerge to base
+        base.addAll(toMerge);
     }
 
     public static void markCompleted(List<String> list, Set<String> completed) {
-        // TODO: Remove tasks in 'completed' using iterator
+        Iterator<String> iterator = list.iterator();
+        while(iterator.hasNext()) {
+            if(completed.contains(iterator.next())) {
+                iterator.remove();
+            } 
+        }
     }
 
     public static void reviewTasks(List<String> list) {
-        // TODO: Print all remaining tasks
+        for(String task : list) {
+            System.out.println(task);
+        }
     }
 
     public static void updateTask(List<String> list, String oldTask, String newTask) {
-        // TODO: Replace oldTask with newTask if it exists
+        if(list.contains(oldTask)) list.set(list.indexOf(oldTask), newTask);
     }
 
     // -------------------------------------------------------------
     // Manual test using IDE
     // -------------------------------------------------------------
-    /*
+    
     public static void main(String[] args) {
         List<String> tasks = createTaskList();
         addTask(tasks, "Prepare slides");
@@ -194,7 +204,7 @@ public class TaskManager {
         System.out.println("== Pending Tasks ==");
         reviewTasks(tasks);
     }
-    */
+    
 	// Torna a comentar aquest main quan vulguis executar els tests amb maven test
     // Vuelve a comentar este main cuando quieras ejecutar los tests con:
     // mvn test
